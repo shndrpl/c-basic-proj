@@ -5,16 +5,42 @@ double memory = 0;
 double result = 0;
 
 // prototypes
-void arithemetic(void);
+int choose_mode(void);
+void arithmetic(void);
 double double_validation(char *str);
 char char_validation(char *str);
 
 int main(void) {
-	int mode = 0;
+	int mode = choose_mode();
 	
-	// ask user what mode
-	bool flag = true;
-	while (flag) {
+	if (mode == 5) {
+		return 0;
+	}
+	
+	switch (mode) {
+		case 1:
+			arithmetic();
+			break;
+		case 2:
+			// remainder
+			break;
+		case 3:
+			// power
+			break;
+		case 4: 
+			// average
+			break;
+	}
+	
+	printf("Result: %.2lf\n", result);
+	
+	return 0;
+}
+
+
+int choose_mode(void) {
+	int mode;
+	while (1) {
 		printf("[1 -> Normal Arithmetic] --- ");
 		printf("[2 -> Remainder] --- ");
 		printf("[3 -> Power] --- ");
@@ -40,39 +66,31 @@ int main(void) {
 		switch (mode) {
 			case 1:
 				// call arithmetic func
-				arithemetic();
-				flag = false;
-				break;
+				printf("----------Arithmetic----------\n");
+				return 1;
 			case 2:
 				// call remainder func
-				printf("Remainder\n");
-				flag = false;
-				break;
+				printf("----------Remainder----------\n");
+				return 2;
 			case 3:
 				// call power func
-				printf("Power\n");
-				flag = false;
-				break;
+				printf("----------Power----------\n");
+				return 3;
 			case 4:
 				// call average func
-				printf("Average\n");
-				flag = false;
-				break;
+				printf("----------Average----------\n");
+				return 4;
 			case 5:
 				// quit
-				printf("Bye!\n");
-				return 0;
+				printf("----------Babye!----------\n");
+				return 5;
 		}
-		
-	}
-	
-	printf("Result: %.2lf\n", result);
-	
-	
-	return 0;
+	}	
 }
 
-void arithemetic(void) {
+
+
+void arithmetic(void) {
 	double first_num = double_validation("First Number");
 	char ope = char_validation("Choose operator: ");
 	double second_num = double_validation("Second Number");
