@@ -14,6 +14,7 @@ char char_validation(char *str);
 void remain(void);
 void to_power(void);
 int int_validation(char *str);
+void cal_average(void);
 
 int main(void) {
 	
@@ -37,11 +38,11 @@ int main(void) {
 				to_power();
 				break;
 			case 4:
-				// average
+				cal_average();
 				break;
 		}
 		
-		printf("Result: %li\n", long_result);
+		printf("Result: %.2lf\n", result);
 		
 		flag = false;
 	}
@@ -205,4 +206,20 @@ int int_validation(char *str) {
 		}
 		return num;
 	}
+}
+
+// average function
+void cal_average(void) {
+	int count = int_validation("Number of scores: ");
+	int total = 0;
+	
+	char label[50];
+	
+	for (int i = 0; i < count; i++) {
+		sprintf(label, "Score %i: ", i+1);
+		double num = double_validation(label);
+		
+		total = total + num;
+	}
+	result = total / count;
 }
