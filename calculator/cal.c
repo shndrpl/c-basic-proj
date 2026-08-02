@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <math.h>
 
 double memory = 0;
 double result = 0;
@@ -9,10 +10,13 @@ int choose_mode(void);
 void arithmetic(void);
 double double_validation(char *str);
 char char_validation(char *str);
+void remain(void);
 
 int main(void) {
+	// call mode function.store return value as int
 	int mode = choose_mode();
 	
+	// check user choose quit
 	if (mode == 5) {
 		return 0;
 	}
@@ -23,6 +27,7 @@ int main(void) {
 			break;
 		case 2:
 			// remainder
+			remain();
 			break;
 		case 3:
 			// power
@@ -114,14 +119,11 @@ void arithmetic(void) {
 			else {
 				result = first_num / second_num;
 			}
+			return;
 	}
 	
 	printf("\n");
 	printf("\n");
-	printf("First Number: %.2lf\n", first_num);
-	printf("Operator: %c\n", ope);
-	printf("First Number: %.2lf\n", second_num);
-	
 }
 
 // helper function
@@ -162,4 +164,12 @@ char char_validation(char *str) {
 			return ope;
 		}
 	}
+}
+
+// remainder func
+void remain(void) {
+	double first_num = double_validation("First Number: ");
+	double second_num = double_validation("second Number: ");
+	result = fmod(first_num, second_num);
+	return;
 }
