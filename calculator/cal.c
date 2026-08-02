@@ -4,6 +4,7 @@
 
 double memory = 0;
 double result = 0;
+long long_result = 0;
 
 // prototypes
 int choose_mode(void);
@@ -11,33 +12,40 @@ void arithmetic(void);
 double double_validation(char *str);
 char char_validation(char *str);
 void remain(void);
+void to_power(void);
+int int_validation(char *str);
 
 int main(void) {
-	// call mode function.store return value as int
-	int mode = choose_mode();
 	
-	// check user choose quit
-	if (mode == 5) {
-		return 0;
+	bool flag = true;
+	while (flag) {
+		int mode = choose_mode();
+		
+		// check if user choose quit
+		if (mode == 5) {
+			return 0;
+		}
+		
+		switch (mode) {
+			case 1:
+				arithmetic();
+				break;
+			case 2:
+				remain();
+				break;
+			case 3:
+				to_power();
+				break;
+			case 4:
+				// average
+				break;
+		}
+		
+		printf("Result: %li\n", long_result);
+		
+		flag = false;
 	}
 	
-	switch (mode) {
-		case 1:
-			arithmetic();
-			break;
-		case 2:
-			// remainder
-			remain();
-			break;
-		case 3:
-			// power
-			break;
-		case 4: 
-			// average
-			break;
-	}
-	
-	printf("Result: %.2lf\n", result);
 	
 	return 0;
 }
@@ -126,7 +134,7 @@ void arithmetic(void) {
 	printf("\n");
 }
 
-// helper function
+// Helper function
 double double_validation(char *str) {
 	double num;
 	
@@ -166,10 +174,35 @@ char char_validation(char *str) {
 	}
 }
 
-// remainder func
+// Remainder func
 void remain(void) {
 	double first_num = double_validation("First Number: ");
 	double second_num = double_validation("second Number: ");
 	result = fmod(first_num, second_num);
 	return;
+}
+
+// power function
+void to_power(void) {
+	int base_num = int_validation("Base number: ");
+	int expo_num = int_validation("Exponent number: ");
+	
+	long_result = pow(base_num, expo_num);
+}
+
+// Helper function for int_validation
+int int_validation(char *str) {
+	int num;
+	while (1) {
+		printf("%s\n", str);
+		printf("::: ");
+		
+		if (scanf("%i", &num) != 1) {
+			printf("Enter a valid integer number\n");
+			
+			while(getchar() != '\n');
+			continue;
+		}
+		return num;
+	}
 }
