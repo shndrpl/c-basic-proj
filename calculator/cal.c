@@ -2,7 +2,7 @@
 #include <stdbool.h>
 
 double memory = 0;
-double total = 0;
+double result = 0;
 
 // prototypes
 void arithemetic(void);
@@ -65,6 +65,10 @@ int main(void) {
 		}
 		
 	}
+	
+	printf("Result: %.2lf\n", result);
+	
+	
 	return 0;
 }
 
@@ -72,6 +76,27 @@ void arithemetic(void) {
 	double first_num = double_validation("First Number");
 	char ope = char_validation("Choose operator: ");
 	double second_num = double_validation("Second Number");
+	
+	// calculate and save to variable result
+	switch (ope) {
+		case '+':
+			result = first_num + second_num;
+			return;
+		case '-':
+			result = first_num - second_num;
+			return;
+		case 'x':
+		case 'X':
+			result = first_num * second_num;
+			return;
+		case '/':
+			if (second_num < 1) {
+				printf("Error: Second number is less than 1\n");
+			}
+			else {
+				result = first_num / second_num;
+			}
+	}
 	
 	printf("\n");
 	printf("\n");
@@ -114,6 +139,9 @@ char char_validation(char *str) {
 			continue;
 		}
 		printf("\n");
-		return ope;
+		
+		if (ope == '+' || ope == '-' || (ope == 'x' || ope == 'X') || ope == '/') {
+			return ope;
+		}
 	}
 }
