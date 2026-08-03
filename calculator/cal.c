@@ -4,7 +4,7 @@
 
 double memory = 0;
 double result = 0;
-long long_result = 0;
+long long long_result = 0;
 
 // prototypes
 int choose_mode(void);
@@ -15,12 +15,14 @@ void remain(void);
 void to_power(void);
 int int_validation(char *str);
 void cal_average(void);
+bool continue_or_quit(void);
 
 int main(void) {
 	
 	bool flag = true;
 	while (flag) {
 		int mode = choose_mode();
+		printf("\n");
 		
 		// check if user choose quit
 		if (mode == 5) {
@@ -42,9 +44,20 @@ int main(void) {
 				break;
 		}
 		
-		printf("Result: %.2lf\n", result);
+		if (mode == 3) {
+			printf("Result: %lli\n", long_result);
+			printf("\n");
+		}
+		else {
+			printf("Result: %.2lf\n", result);
+		}
 		
-		flag = false;
+	bool is_quit = continue_or_quit();
+	
+	if (is_quit) {
+		return 0;
+	}
+		
 	}
 	
 	
@@ -122,7 +135,7 @@ void arithmetic(void) {
 			result = first_num * second_num;
 			return;
 		case '/':
-			if (second_num < 1) {
+			if (second_num == 0.0) {
 				printf("Error: Second number is less than 1\n");
 			}
 			else {
@@ -222,4 +235,16 @@ void cal_average(void) {
 		total = total + num;
 	}
 	result = total / count;
+}
+
+// continue or quit option
+bool continue_or_quit(void) {
+	int num = int_validation("['1' -> Continue] --- ['2' -> Quit]");
+	
+	if (num == 1) {
+		return false;
+	}
+	else {
+		return true;
+	}
 }
