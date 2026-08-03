@@ -21,13 +21,10 @@ void to_power(void);
 int int_validation(char *str);
 void cal_average(void);
 int continue_save_quit(void);
+void clear_screen(void);
 
 int main(void) {
-	#ifdef _WIN32
-		system("cls");  // Runs ONLY on Windows
-	#else
-		system("clear"); // Runs on Linux / macOS
-	#endif
+	clear_screen();
 	
 	while (1) {
 		int mode = choose_mode();
@@ -72,7 +69,7 @@ int main(void) {
 			}
 		}
 		
-		
+		// check if yser choose continue/save/quit
 		while (1) {
 			int is_continue_save_quit = continue_save_quit();
 			
@@ -93,12 +90,7 @@ int main(void) {
 				}
 			}
 			else {
-				#ifdef _WIN32
-					system("cls");  // Runs ONLY on Windows
-				#else
-						system("clear"); // Runs on Linux / macOS
-				#endif
-				
+				clear_screen();
 				break;
 			}
 		}
@@ -110,6 +102,7 @@ int main(void) {
 int choose_mode(void) {
 	int mode;
 	while (1) {
+		printf("[0 -> Print current memory] --- ");
 		printf("[1 -> Normal Arithmetic] --- ");
 		printf("[2 -> Remainder] --- ");
 		printf("[3 -> Power] --- ");
@@ -285,10 +278,19 @@ void cal_average(void) {
 // continue or quit option
 int continue_save_quit(void) {
 	while (1) {
-		int num = int_validation("['1' -> Continue] --- ['2' Save] --- ['3' -> Quit]");
+		int num = int_validation("['0' -> Current Memory] --- ['1' -> Continue] --- ['2' Save] --- ['3' -> Quit]");
 		
-		if (num == 1 || num == 2 || num == 3) {
+		if (num == 0 || num == 1 || num == 2 || num == 3) {
 			return num;
 		}
 	}
+}
+
+// clear screen terminal function
+void clear_screen(void) {
+	#ifdef _WIN32
+		system("cls");
+	#else
+		system("clear");
+	#endif
 }
