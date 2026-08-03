@@ -1,10 +1,15 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <math.h>
 
 double memory = 0;
 double result = 0;
+
+long long long_memory = 0;
 long long long_result = 0;
+
+int double_or_long = 0;
 
 // prototypes
 int choose_mode(void);
@@ -15,12 +20,16 @@ void remain(void);
 void to_power(void);
 int int_validation(char *str);
 void cal_average(void);
-bool continue_or_quit(void);
+int continue_save_quit(void);
 
 int main(void) {
+	#ifdef _WIN32
+		system("cls");  // Runs ONLY on Windows
+	#else
+		system("clear"); // Runs on Linux / macOS
+	#endif
 	
-	bool flag = true;
-	while (flag) {
+	while (1) {
 		int mode = choose_mode();
 		printf("\n");
 		
@@ -44,23 +53,56 @@ int main(void) {
 				break;
 		}
 		
-		if (mode == 3) {
-			printf("Result: %lli\n", long_result);
-			printf("\n");
+		if (mode == 0) {
+			if (double_or_long == 1) {
+				printf("Current Memory: %lli\n", long_memory);
+			}
+			else{
+				printf("Current Memory: %.2lf\n", memory);
+			}
 		}
 		else {
-			printf("Result: %.2lf\n", result);
+			if (mode == 3) {
+				printf("Result: %lli\n", long_result);
+				printf("\n");
+			}
+			else {
+				printf("Result: %.2lf\n", result);
+				printf("\n");
+			}
 		}
 		
-	bool is_quit = continue_or_quit();
-	
-	if (is_quit) {
-		return 0;
-	}
 		
+		while (1) {
+			int is_continue_save_quit = continue_save_quit();
+			
+			if (is_continue_save_quit == 3) {
+				printf("----------Babye!----------\n");
+				return 0;
+			}
+			else if (is_continue_save_quit == 2) {
+				if (mode == 3) {
+					long_memory = long_result;
+					printf("Memory saved: %lli\n", long_memory);
+					double_or_long = 1;
+				}
+				else {
+					memory = result;
+					printf("Memory saved: %.2lf\n", memory);
+					double_or_long = 2;
+				}
+			}
+			else {
+				#ifdef _WIN32
+					system("cls");  // Runs ONLY on Windows
+				#else
+						system("clear"); // Runs on Linux / macOS
+				#endif
+				
+				break;
+			}
+		}
 	}
-	
-	
 	return 0;
 }
 
@@ -82,7 +124,7 @@ int choose_mode(void) {
 			continue;
 		}
 		
-		if (mode < 1 || mode > 5) {
+		if (mode < 0 || mode > 5) {
 			printf("1 - 5 Only.\n");
 			while(getchar() != '\n');
 			continue;
@@ -91,6 +133,9 @@ int choose_mode(void) {
 		printf("\n");
 		
 		switch (mode) {
+			case 0:
+				// print memory
+				return 0;
 			case 1:
 				// call arithmetic func
 				printf("----------Arithmetic----------\n");
@@ -238,13 +283,12 @@ void cal_average(void) {
 }
 
 // continue or quit option
-bool continue_or_quit(void) {
-	int num = int_validation("['1' -> Continue] --- ['2' -> Quit]");
-	
-	if (num == 1) {
-		return false;
-	}
-	else {
-		return true;
+int continue_save_quit(void) {
+	while (1) {
+		int num = int_validation("['1' -> Continue] --- ['2' Save] --- ['3' -> Quit]");
+		
+		if (num == 1 || num == 2 || num == 3) {
+			return num;
+		}
 	}
 }
