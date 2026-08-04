@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct
 {
@@ -26,16 +27,47 @@ int contactCount = sizeof(contacts) / sizeof(contacts[0]);
 
 // prototypes
 int menu_choice(void);
+void add_contact(void);
+void helper_add_contact(char *str1, char *str2);
 
 int main(void) {
 	
 	while(1) {
 		int menu = menu_choice();
 		
+		switch (menu) {
+			case 1:
+				// Add Contact
+				add_contact();
+				break;
+			case 2:
+				// View Contacts
+				break;
+			case 3:
+				// Search Contact
+				break;
+			case 4:
+				// Update Contact
+				break;
+			case 5:
+				// Delete Contact
+				break;
+			case 6:
+				// exit
+				return 0;
+		}
 		
+		flag = false;
 		
 		
 	}
+	
+	//int lastDigit = contactCount - 1;
+	
+	//printf("Name: %s", contacts[lastDigit].name);
+	//printf("Name: %s", contacts[lastDigit].phone);
+	//printf("Name: %s", contacts[lastDigit]);
+	//printf("Name: %s", contacts[lastDigit]);
 	
 	
 	return 0;
@@ -83,8 +115,55 @@ int menu_choice(void) {
 	}
 }
 
-// option choice function
-void validate_choice() {}
+
+// Add Contact function
+void add_contact(void) {
+	// name
+	helper_add_contact("Name", "Please a valid name");
+	
+	// phone number
+	helper_add_contact("Phone Number", "Please a valid phone number");
+	
+	// email
+	helper_add_contact("Email", "Please a valid email");
+	
+	// address
+	helper_add_contact("Address", "Please a valid address");
+	
+	return;
+}
+
+// helper for add contact function
+void helper_add_contact(char *str1, char *str2) {
+	int lastIndex = contactCount - 1;
+	
+	while (1) {
+		printf("%s: ", str1);
+		printf("::: ");
+		
+		if(scanf("%s", contacts[lastIndex].name) != 1) {
+			printf("%s\n", str2);
+			
+			while(getchar() != '\n');
+			continue;
+		}
+		return;
+	}
+}
+
+
+// View Contacts
+
+
+// Search Contact
+
+
+// Update Contact
+
+
+// Delete Contact
+
+
 
 
 
