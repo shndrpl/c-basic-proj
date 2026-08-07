@@ -1,5 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+
+#define MAX 20
 
 typedef struct
 {
@@ -10,7 +15,7 @@ typedef struct
     char address[100];
 } Contact;
 
-Contact contacts[] = {
+Contact contacts[MAX] = {
     {1, "Juan Dela Cruz", "09171234567", "juan.delacruz@email.com", "Cagayan de Oro City"},
     {2, "Maria Santos", "09981234567", "maria.santos@email.com", "Manila City"},
     {3, "John Reyes", "09261234567", "john.reyes@email.com", "Davao City"},
@@ -28,11 +33,13 @@ int contactCount = sizeof(contacts) / sizeof(contacts[0]);
 // prototypes
 int menu_choice(void);
 void add_contact(void);
-void helper_add_contact(char *str1, char *str2);
+void validate_name(char *fieldName, char *errorText, int slot);
+void validate_phone(char *fieldName, char *errorText, int slot);
 
 int main(void) {
 	
-	while(1) {
+	bool flag = true;
+	while(flag) {
 		int menu = menu_choice();
 		
 		switch (menu) {
@@ -62,12 +69,14 @@ int main(void) {
 		
 	}
 	
-	//int lastDigit = contactCount - 1;
+//	for (int i = 0; i < contactCount; i++) {
+//		printf("Name: %s\n", contacts[i].name);
+//		printf("Phone: %s\n", contacts[i].phone);
+//		printf("Email: %s\n", contacts[i].email);
+//		printf("Address: %s\n", contacts[i].address);
+//		printf("-------------------------------------\n");
+//	}
 	
-	//printf("Name: %s", contacts[lastDigit].name);
-	//printf("Name: %s", contacts[lastDigit].phone);
-	//printf("Name: %s", contacts[lastDigit]);
-	//printf("Name: %s", contacts[lastDigit]);
 	
 	
 	return 0;
@@ -118,36 +127,87 @@ int menu_choice(void) {
 
 // Add Contact function
 void add_contact(void) {
+	// get the first slot of struct
+	int slot = -1;
+	for (int i = 0; i < MAX; i++) {
+		if (contacts[i].name[0] == '\0') {
+			slot = i;
+			break;
+		}
+	}
+	
+	if (slot == -1) {
+		printf("Contact is full\n");
+		return;
+	}
+	
+	
 	// name
-	helper_add_contact("Name", "Please a valid name");
+	validate_name("Name: ", "Please enter a valid name", slot);
 	
 	// phone number
-	helper_add_contact("Phone Number", "Please a valid phone number");
+	validate_phone("Phone Number: ", "Please enter a valid number", slot);
+	
 	
 	// email
-	helper_add_contact("Email", "Please a valid email");
+	
 	
 	// address
-	helper_add_contact("Address", "Please a valid address");
+	
 	
 	return;
 }
 
-// helper for add contact function
-void helper_add_contact(char *str1, char *str2) {
-	int lastIndex = contactCount - 1;
+
+void validate_name(char *fieldName, char *errorText, int slot) {
+	char tempName[50];
 	
-	while (1) {
-		printf("%s: ", str1);
-		printf("::: ");
+	while(1) {
+		bool flag = true;
+		while(getchar() != '\n');
+		printf("%s", fieldName);
+		scanf("%s", tempName);
 		
-		if(scanf("%s", contacts[lastIndex].name) != 1) {
-			printf("%s\n", str2);
-			
-			while(getchar() != '\n');
-			continue;
+		for (int i = 0; tempName[i] != '\0'; i++) {
+			if (!isalpha((unsigned char) tempName[i])) {
+				printf("%s\n", errorText);
+				flag = false;
+				break;
+			}
 		}
-		return;
+		
+		if (flag) {
+			strcpy(contacts[slot].name, tempName);
+			printf("TempName: %s\n", contacts[slot].name);
+			printf("\n");
+			return;
+		}
+	}
+}
+
+void validate_phone(char *fieldName, char *errorText, int slot) {
+	char tempPhone[50];
+	
+	while(1) {
+		bool flag = true;
+		while(getchar() != '\n');
+		printf("%s", fieldName);
+		scanf("%s", tempPhone);
+		
+		for (int i = 0; tempPhone[i] != '\0'; i++) {
+			if (!isdigit((unsigned char) tempPhone[i])) {
+				printf("%s\n", errorText);
+				flag = false;
+				break;
+			}
+		}
+		
+		if (flag) {
+			strcpy(contacts[slot].phone, tempPhone);
+			printf("TempPhone: %s\n", contacts[slot].phone);
+			printf("\n");
+			return;	
+		}
 	}
 }
 
