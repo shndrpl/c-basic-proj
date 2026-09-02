@@ -6,7 +6,9 @@
 int main(void) {
     node *temp = malloc(sizeof(node));
 
-    // loadFiles(temp);
+    loadFiles(temp);
+
+    // printFile(temp);
 
     return 0;
 }
