@@ -5,16 +5,16 @@
 #include "customLib.h"
 
 
-int isName(node *temp);
+int isName(void);
 
 
 
 // ADD CONTACT
-void addContact(node *temp) {
+void addContact(void) {
     
     while (1) {
         do {
-            if (isName(temp) == 1) {
+            if (isName() == 1) {
                 break;
             }
         }
@@ -33,7 +33,7 @@ void addContact(node *temp) {
 
 // add contact helper function
 
-int isName(node *temp) {
+int isName(void) {
     char name[50];
     int attemps = 0;
     while (1) {
@@ -57,6 +57,9 @@ int isName(node *temp) {
             attemps++;
             continue;
         }
+
+        // malloc 
+        node *temp = malloc(sizeof(node));
 
         // get first character
         char firstChar = tolower(name[0]);

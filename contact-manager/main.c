@@ -4,11 +4,19 @@
 
 
 int main(void) {
-    node *temp = malloc(sizeof(node));
 
-    loadFiles(temp);
+    // load data to memory
+    loadFiles();
 
-    // printFile(temp);
+    while (1) {
+
+        return 1;
+    }
+
+   
 
     return 0;
 }
+
+
+

@@ -13,14 +13,14 @@ typedef struct node {
 } node;
 
 // file IO
-void loadFiles(node *temp);
-void printFile(node *temp);
+void loadFiles(void);
+void printFile(void);
 
 // tables or buckets
 extern node *tables[SIZE];
 
 // function declarations
-void addContact(node *temp);
+void addContact(void);
 // void searchContact();
 // void viewSingleContact();
 // void editContact();
