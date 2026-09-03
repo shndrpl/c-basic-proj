@@ -4,41 +4,20 @@
 #include <stdlib.h>
 #include "customLib.h"
 
-
-int isName(void);
+// protypes
+void isPhone(node *temp);
+void isAddress(node *temp);
+void isEmail(node *temp);
 
 
 
 // ADD CONTACT
-void addContact(void) {
-    
+
+int addContact(void) {
+    char name[100];
     while (1) {
-        do {
-            if (isName() == 1) {
-                break;
-            }
-        }
-        while (1);
-
-        
-
-
-
-
-
-        
-    }
-    
-}
-
-// add contact helper function
-
-int isName(void) {
-    char name[50];
-    int attemps = 0;
-    while (1) {
-        printf("Enter Name: ");
-        if (scanf("%49s", name) != 1) {
+        printf("Name: ");
+        if (scanf("%99s", name) != 1) {
             printf("Try again!\n");
             continue;
         }
@@ -54,7 +33,6 @@ int isName(void) {
         }
 
         if (!isAlpha) {
-            attemps++;
             continue;
         }
 
@@ -67,17 +45,101 @@ int isName(void) {
 
         strcpy(temp->name, name);
 
-        printf("%c, %i\n", firstChar, index);
+
+
+        // call isPhone function
+        isPhone(temp);
+
+        // call isAddress function
+        isAddress(temp);
+
+        // call isEmail function
+        isEmail(temp);
+
+        // next node or address
+        temp->next = tables[index];
+
+        tables[index] = temp;
+
+
         return 1;
 
     }
 }
 
-// bool isPhone(void) {}
+// add contact helper function
 
-// bool isAddress(void) {}
+void isPhone(node *temp) {
+    char phone[100];
+    while (1) {
+        printf("Phone: ");
+        if (scanf("%99s", phone) != 1) {
+            printf("Try again!\n");
+            continue;
+        }
 
-// bool isEmail(void) {}
+        int len = strlen(phone);
+        bool isDigit = true;
+        for (int i = 0; i < len; i++) {
+            if (!isdigit(phone[i])) {
+                printf("Digits only!\n");
+                isDigit = false;
+                break;
+            }
+        }
+
+        if (!isDigit) {
+            continue;
+        }
+
+        strcpy(temp->phone, phone);
+
+        return;
+    }
+}
+
+void isAddress(node *temp) {
+    char address[100];
+    while (1) {
+        printf("address: ");
+        if (scanf("%99s", address) != 1) {
+            printf("Try again!\n");
+            continue;
+        }
+
+        strcpy(temp->address, address);
+
+        return;
+    }
+}
+
+void isEmail(node *temp) {
+    char email[100];
+    while (1) {
+        printf("Email: ");
+        if (scanf("%99s", email) != 1) {
+            printf("Try again!\n");
+            continue;
+        }
+
+        int len = strlen(email);
+        int atSign = 0;
+        for (int i = 5; i < len; i++) {
+            if (email[i] == '@') {
+                atSign++;
+            }
+        }
+
+        if (atSign != 1) {
+            printf("Missing or multiple '@' \n");
+            continue;
+        }
+
+        strcpy(temp->email, email);
+        
+        return;
+    }
+}
 
 
 

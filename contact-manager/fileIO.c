@@ -6,14 +6,9 @@
 
 node *tables[SIZE] = {NULL};
 
-void loadFiles(void);
-void printFile(void);
 
-
-
-
+// copy data from file to memory
 void loadFiles(void) {
-
     FILE *file = fopen("credentials.txt", "r");
     if (file == NULL) {
         printf("fopen failed!\n");
@@ -30,8 +25,6 @@ void loadFiles(void) {
             char firstChar = tolower((unsigned char)temp->name[0]);
             int index = (firstChar - 'a') % SIZE;
 
-            printf("%s %i\n", temp->name, index);
-
             temp->next = tables[index];
 
             tables[index] = temp;
@@ -44,7 +37,7 @@ void loadFiles(void) {
     }
 }
 
-
+// print data
 void printFile(void) {
     for (int i = 0; i < SIZE; i++) {
         for (node *ptr = tables[i]; ptr != NULL; ptr = ptr->next) {
@@ -54,4 +47,21 @@ void printFile(void) {
     return;
 }
 
+
+// free memory
+void freeMem(void) {
+    for (int i = 0; i < SIZE; i++) {
+        node *temp = tables[i];
+
+        while (temp != NULL) {
+            node *n = temp;
+            temp = temp->next;
+            free(n);
+        }
+
+        tables[i] = NULL;
+    }
+
+    return;
+}
 
