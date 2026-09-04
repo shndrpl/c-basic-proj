@@ -10,33 +10,23 @@ void isAddress(node *temp);
 void isEmail(node *temp);
 void saveInfo(node *temp);
 
+char *nameValidation(void);
+
 
 
 // ADD CONTACT
 
 int addContact(void) {
     printf("ENTER INFORMATION.\n");
-    char name[100];
     while (1) {
-        printf("Name: ");
-        if (scanf("%99s", name) != 1) {
-            printf("Try again!\n");
-            continue;
-        }
+        char *tempName = nameValidation();
 
-        int len = strlen(name);
-        bool isAlpha = true;
-        for (int i = 0; i < len; i++) {
-            if (!isalpha(name[i])) {
-                printf("Alphabetical only!\n");
-                isAlpha = false;
-                break;
-            }
-        }
+        // copy name from tempName pointer var
+        char name[100];
+        strcpy(name, tempName);
 
-        if (!isAlpha) {
-            continue;
-        }
+        // free tempName
+        free(tempName);
 
         // malloc 
         node *temp = malloc(sizeof(node));
@@ -147,7 +137,7 @@ void isEmail(node *temp) {
 }
 
 
-// save info to file .txt
+// save info to file .txt | helper function for addContact()
 void saveInfo(node *temp) {
 
     FILE *file = fopen("credentials.txt", "a");
@@ -158,8 +148,68 @@ void saveInfo(node *temp) {
 
     fprintf(file, "%s|%s|%s|%s\n", temp->name, temp->phone, temp->address, temp->email);
 
+    fclose(file);
+
     return;
 }
+
+
+
+// search contact function
+void searchContact(void) {
+
+    char *tempName = nameValidation();
+
+    // copy the name from tempName
+    char name[100];
+    strcpy(name, tempName);
+
+    // free tempName
+    free(tempName);
+
+    // get index of firstChar
+    char firstChar = tolower(name[0]);
+    int index = ((unsigned char)firstChar - 'a') % SIZE;
+
+    for (node *ptr = tables[index]; ptr != NULL; ptr = ptr->next) {
+        if (strcmp(ptr->name, name) == 0) {
+            printf("FOUND!\n");
+            printf("Name: %s | Phone: %s | Address: %s | Email: %s \n", ptr->name, ptr->phone, ptr->address, ptr->email);
+            return;
+        }
+    }
+}
+
+
+// nameValidation() | helper function for addContact and searchContact
+char *nameValidation(void) {
+    // ask name to search
+    char *name = malloc(sizeof(char) * 100);
+    while (1) {
+        printf("Name: ");
+        if (scanf("%99s", name) != 1) {
+            printf("Please enter a valid name!\n");
+            continue;
+        }
+
+        int len = strlen(name);
+        bool isAlpha = true;
+        for (int i = 0; i < len; i++) {
+            if (!isalpha(name[i])) {
+                printf("Alphabetical only!\n");
+                isAlpha = false;
+                break;
+            }
+        }
+
+        if (isAlpha) {
+            return name;
+        }
+    }
+}
+
+
+
 
 
 
