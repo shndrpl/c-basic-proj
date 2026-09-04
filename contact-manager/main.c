@@ -8,23 +8,23 @@ int main(void) {
     // load data to memory
     loadFiles();
 
-    // print data
-    // printFile();
-
-    // free memory
-    // freeMem();
-
     while (1) {
 
-        addContact();
+        // choose mode
+        int mode = -1;
+        printf("CHOOSE MODE.\n");
+        printf("[0] - Quit\n");
+        printf("[1] - Add Contact\n");
+        printf("[2] - Search Contact\n");
+        printf("[3] - View Single Contact\n");
+        printf("[4] - Delete Contact\n");
 
-        printFile();
+        //free memory
+        freeMem();
 
-        return 1;
+        return 0;
     }
-   
 
-    return 0;
 }
 
 

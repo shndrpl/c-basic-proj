@@ -26,6 +26,9 @@ int addContact(void);
 // void viewSingleContact();
 // void editContact();
 // void deleteContact();
+
+
+
 // void loadContactsFromFile();
 // void sortContacts();
 // void exitProgram();

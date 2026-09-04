@@ -8,12 +8,14 @@
 void isPhone(node *temp);
 void isAddress(node *temp);
 void isEmail(node *temp);
+void saveInfo(node *temp);
 
 
 
 // ADD CONTACT
 
 int addContact(void) {
+    printf("ENTER INFORMATION.\n");
     char name[100];
     while (1) {
         printf("Name: ");
@@ -55,6 +57,9 @@ int addContact(void) {
 
         // call isEmail function
         isEmail(temp);
+
+        // save info to file .txt
+        saveInfo(temp);
 
         // next node or address
         temp->next = tables[index];
@@ -139,6 +144,21 @@ void isEmail(node *temp) {
         
         return;
     }
+}
+
+
+// save info to file .txt
+void saveInfo(node *temp) {
+
+    FILE *file = fopen("credentials.txt", "a");
+    if (file == NULL) {
+        printf("fopen failed!\n");
+        return;
+    } 
+
+    fprintf(file, "%s|%s|%s|%s\n", temp->name, temp->phone, temp->address, temp->email);
+
+    return;
 }
 
 

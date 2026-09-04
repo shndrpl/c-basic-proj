@@ -31,6 +31,8 @@ void loadFiles(void) {
 
         }
         else {
+            free(temp);
+            fclose(file);
             return;
         }
 
