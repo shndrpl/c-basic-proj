@@ -67,6 +67,7 @@ int addContact(void) {
 void isPhone(node *temp) {
     char phone[100];
     while (1) {
+        while (getchar() != '\n');
         printf("Phone: ");
         if (scanf("%99s", phone) != 1) {
             printf("Try again!\n");
@@ -187,7 +188,7 @@ char *nameValidation(void) {
     char *name = malloc(sizeof(char) * 100);
     while (1) {
         printf("Name: ");
-        if (scanf("%99s", name) != 1) {
+        if (scanf(" %99[^\n]", name) != 1) {
             printf("Please enter a valid name!\n");
             continue;
         }
@@ -195,7 +196,7 @@ char *nameValidation(void) {
         int len = strlen(name);
         bool isAlpha = true;
         for (int i = 0; i < len; i++) {
-            if (!isalpha(name[i])) {
+            if (!isalpha((unsigned char)name[i]) && name[i] != ' ') {
                 printf("Alphabetical only!\n");
                 isAlpha = false;
                 break;
