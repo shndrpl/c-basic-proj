@@ -8,7 +8,7 @@ int main(void) {
     // load data to memory
     loadFiles();
 
-    printFile();
+    // printFile();
 
     while (1) {
 

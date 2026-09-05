@@ -112,6 +112,7 @@ void isAddress(node *temp) {
 void isEmail(node *temp) {
     char email[100];
     while (1) {
+        while (getchar() != '\n');
         printf("Email: ");
         if (scanf("%99s", email) != 1) {
             printf("Try again!\n");
