@@ -169,13 +169,25 @@ void searchContact(void) {
     free(tempName);
 
     // get index of firstChar
-    char firstChar = tolower(name[0]);
+    char firstChar = name[0];
     int index = ((unsigned char)firstChar - 'a') % SIZE;
 
     for (node *ptr = tables[index]; ptr != NULL; ptr = ptr->next) {
+
+        int len = strlen(ptr->name);
+
+        for (int i = 0; i < len; i++) {
+            ptr->name[i] = tolower(ptr->name[i]);
+        }
+
         if (strcmp(ptr->name, name) == 0) {
             printf("FOUND!\n");
             printf("Name: %s | Phone: %s | Address: %s | Email: %s \n", ptr->name, ptr->phone, ptr->address, ptr->email);
+            return;
+        }
+        else {
+            printf("NO MATCH!\n");
+            printf("Complete name only.\n");
             return;
         }
     }
@@ -194,6 +206,11 @@ char *nameValidation(void) {
         }
 
         int len = strlen(name);
+
+        for (int i = 0; i < len; i++) {
+            name[i] = tolower(name[i]);
+        }
+
         bool isAlpha = true;
         for (int i = 0; i < len; i++) {
             if (!isalpha((unsigned char)name[i]) && name[i] != ' ') {
@@ -207,6 +224,63 @@ char *nameValidation(void) {
             return name;
         }
     }
+}
+
+
+
+
+// delete contact function
+void deleteContact(void) {
+
+    char *name = nameValidation();
+    
+    // get index of firstChar
+    char firstChar = name[0];
+    int index = ((unsigned char)firstChar - 'a') % SIZE;
+
+    // open file .txt
+    FILE *file = fopen("credentials.txt", "r");
+    FILE *tempFile = fopen("temp.txt", "a");
+
+    if (file == NULL || tempFile == NULL) {
+        printf("fopen Failed!\n");
+        return;
+    }
+
+    char line[400];
+
+    while (fgets(line, sizeof(line), file)) {
+        int len = strlen(line);
+
+        for (int i = 0; i < len; i++) {
+            line[i] = tolower(line[i]);
+        }
+
+        // get len of name
+        int nameLen = strlen(name);
+        char tempName[100];
+
+        for (int j = 0; j < nameLen; j++) {
+            tempName[j] = line[j];
+        }
+        tempName[nameLen] = '\0';
+
+        if (strcmp(tempName, name) != 0) {
+            fputs(line, tempFile);
+        }
+        else {
+            printf("Found... Deleted!\n");
+        }
+
+    }
+
+    fclose(file);
+    fclose(tempFile);
+
+    remove("credentials.txt");
+    rename("temp.txt", "credentials.txt");
+
+    return;
 }
 
 

@@ -23,9 +23,8 @@ extern node *tables[SIZE];
 // function declarations
 int addContact(void);
 void searchContact(void);
-// void viewSingleContact();
 // void editContact();
-// void deleteContact();
+void deleteContact();
 
 
 

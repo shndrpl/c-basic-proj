@@ -8,6 +8,8 @@ int main(void) {
     // load data to memory
     loadFiles();
 
+    printFile();
+
     while (1) {
 
         // choose mode
@@ -16,7 +18,7 @@ int main(void) {
         printf("[0] - Quit\n");
         printf("[1] - Add Contact\n");
         printf("[2] - Search Contact\n");
-        printf("[3] - View Single Contact\n");
+        printf("[3] - Edit Contact\n");
         printf("[4] - Delete Contact\n");
         printf("::: ");
         if (scanf("%i", &mode) != 1) {
@@ -24,7 +26,6 @@ int main(void) {
             while (getchar() != '\n');
             continue;
         }
-
 
 
         // call function mode
@@ -40,6 +41,14 @@ int main(void) {
             case 2:
                 // search contact
                 searchContact();
+                break;
+            case 3:
+                // edit contact
+                // editContact();
+                break;
+            case 4:
+                // delete contact
+                deleteContact();
                 break;
         }
 
