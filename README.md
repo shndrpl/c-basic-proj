@@ -26,3 +26,11 @@ These projects are for **practice and learning C programming**. The goal is to s
 
 
 Give me the pull shark badge blabla..
+
+
+
+
+balablabnla
+
+
+"The only thing I know is that I know nothing."
