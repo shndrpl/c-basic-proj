@@ -1,4 +1,4 @@
-# C Practice Projects.ssssssssssss
+# C Practice Projects.
 
 Small C projects created for practice and learning.
 # C Practice Projects
@@ -23,3 +23,6 @@ A basic command-line calculator for performing simple arithmetic operations.
 ## Purpose
 
 These projects are for **practice and learning C programming**. The goal is to strengthen my understanding of C through small projects.
+
+
+Give me the pull shark badge blabla..
