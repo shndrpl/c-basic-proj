@@ -291,6 +291,12 @@ char *phoneValidation(void) {
         }
 
         int len = strlen(phone);
+    
+        if (len < 10) {
+            printf("Phone number must be 10 digit more.\n");
+            continue;
+        }
+
         bool isDigit = true;
         for (int i = 0; i < len; i++) {
             if (!isdigit(phone[i])) {
